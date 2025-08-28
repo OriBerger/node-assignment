@@ -1,10 +1,10 @@
 import {
-    format,
-    getDayOfYear,
-    getDaysInMonth,
-    getISOWeek,
-    getQuarter,
-    isWeekend,
+  format,
+  getDayOfYear,
+  getDaysInMonth,
+  getISOWeek,
+  getQuarter,
+  isWeekend,
 } from "date-fns";
 
 export const getDateInfo = (dateInput, timeZone) => {
