@@ -3,11 +3,11 @@ import {
   getDayOfYear,
   getDaysInMonth,
   getISOWeek,
-  getQuarter,
-  isWeekend,
+  getQuarter
 } from "date-fns";
 
 export const getDateInfo = (dateInput, timeZone) => {
+  const isWeekend = dateInput.getDay() >= 4 ? true : false;
   return {
     year: dateInput.getFullYear(),
     month: dateInput.getMonth() + 1,
@@ -22,7 +22,7 @@ export const getDateInfo = (dateInput, timeZone) => {
     weekOfYear: getISOWeek(dateInput),
     dayOfYear: getDayOfYear(dateInput),
     quarter: getQuarter(dateInput),
-    isWeekend: isWeekend(dateInput),
+    isWeekend: isWeekend,
     daysInMonth: getDaysInMonth(dateInput),
     timestamp: dateInput.getTime(),
     timeZone: timeZone,
