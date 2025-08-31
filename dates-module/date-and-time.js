@@ -3,10 +3,13 @@ import {
   getDayOfYear,
   getDaysInMonth,
   getISOWeek,
-  getQuarter
+  getQuarter,
 } from "date-fns";
 
 export const getDateInfo = (dateInput, timeZone) => {
+  if (!(dateInput instanceof Date)) {
+    throw new Error("Invalid date input");
+  }
   const isWeekend = dateInput.getDay() >= 4 ? true : false;
   return {
     year: dateInput.getFullYear(),
