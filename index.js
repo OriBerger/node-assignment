@@ -10,10 +10,10 @@ const end1 = new Date(2025, 11, 4);
 const date = new Date();
 const date1 = new Date();
 
-const start2 = new Date(2025, 4, 22, 2 ,3, 2);
-const end2 = new Date(2026, 9, 23, 2 ,3, 2);
-const start3 = new Date(2025, 4, 2, 2 ,3, 2);
-const end3 = new Date(2025, 4, 2, 2 ,6, 6);
+const start2 = new Date(2025, 4, 22, 2, 3, 2);
+const end2 = new Date(2026, 9, 23, 2, 3, 2);
+const start3 = new Date(2025, 4, 2, 2, 3, 2);
+const end3 = new Date(2025, 4, 2, 2, 6, 6);
 
 console.log(formatDateRange(start, end, "DD/MM/YY"));
 console.log(formatDateRange(start, end, "MM/YYYY"));

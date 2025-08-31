@@ -1,7 +1,7 @@
 export const formatDateRange = (startDate, endDate, format) => {
   if (startDate > endDate) throw new Error("Invalid date range");
 
-  const pad = (n) => (n < 10 ? "0" + n : n);
+  const pad = n => n < 10 ? "0" + n : n;
 
   const formats = {
     "DD/MM/YY": () => {
