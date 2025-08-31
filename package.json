@@ -1,18 +1,20 @@
 {
-  "name": "assignment",
+  "name": "node-assignment",
   "version": "1.0.0",
-  "description": "a small assignment for the course",
+  "description": "a small assignment for the course about node",
   "main": "index.js",
   "type": "module",
   "scripts": {
     "start": "node index.js",
-    "test": "vitest run"
+    "test": "vitest run",
+    "config": "node ./config/config.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "date-fns": "^4.1.0"
+    "date-fns": "^4.1.0",
+    "dotenv": "^17.2.1"
   },
   "devDependencies": {
     "vitest": "^3.2.4"
