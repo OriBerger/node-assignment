@@ -6,7 +6,7 @@ A small Node.js assignment for learning date manipulation, interval generation, 
 
 ## Installation
 
-1. Clone the repository:
+Clone the repository:
 
 ```bash
 git clone https://github.com/OriBerger/node-assignment.git
