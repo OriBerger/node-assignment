@@ -1,52 +1,48 @@
-export const generateDates = (startDate, endDate, interval) => {
-  const result = [];
-  const current = new Date(startDate);
-  const intervals = [
-    "year",
-    "month",
-    "week",
-    "day",
-    "halfday",
-    "hour",
-    "minute",
-    "second",
-  ];
+import {
+  eachDayOfInterval,
+  eachHourOfInterval,
+  eachMinuteOfInterval,
+  eachMonthOfInterval,
+  eachWeekOfInterval,
+  eachYearOfInterval,
+  isBefore,
+} from "date-fns";
 
-  if (!intervals.includes(interval)) {
-    throw new Error("Invalid interval");
-  }
+const intervals = {
+  year: eachYearOfInterval,
+  month: eachMonthOfInterval,
+  week: eachWeekOfInterval,
+  day: eachDayOfInterval,
+  halfday: createInterval, // Custom interval implementation
+  hour: eachHourOfInterval,
+  minute: eachMinuteOfInterval,
+  second: createInterval, // Custom interval implementation
+};
 
-  while (current <= endDate) {
-    result.push(new Date(current));
-
-    switch (interval) {
-      case "year":
-        current.setFullYear(current.getFullYear() + 1);
-        break;
-      case "month":
-        current.setMonth(current.getMonth() + 1);
-        break;
-      case "week":
-        current.setDate(current.getDate() + 7);
-        break;
-      case "day":
-        current.setDate(current.getDate() + 1);
-        break;
-      case "halfday":
-        current.setHours(current.getHours() + 12);
-        break;
-      case "hour":
-        current.setHours(current.getHours() + 1);
-        break;
-      case "minute":
-        current.setMinutes(current.getMinutes() + 1);
-        break;
-      case "second":
-        current.setSeconds(current.getSeconds() + 1);
-        break;
-      default:
-        current.setDate(current.getDate() + 1); // One day as default
+function createInterval(startDate, endDate, interval) {
+  const dates = [];
+  let current = new Date(startDate);
+  let end = new Date(endDate);
+  while (isBefore(current, end)) {
+    dates.push(new Date(current));
+    if (interval === "halfday") {
+      current.setHours(current.getHours() + 12); // Halfday
+    } else {
+      current.setSeconds(current.getSeconds() + 1); // Second
     }
   }
-  return result;
-};
+  return dates;
+}
+
+export function generateDates(startDate, endDate, interval = "day") {
+  if (!intervals[interval]) {
+    throw new Error("Invalid interval");
+  }
+  if (interval === "halfday" || interval === "second") {
+    return createInterval(startDate, endDate, interval); // Manual implementation
+  }
+  const start = new Date(startDate);
+  const end = new Date(endDate);
+  const dates = intervals[interval]({ start, end });
+  return dates;
+}

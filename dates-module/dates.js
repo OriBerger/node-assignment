@@ -1,38 +1,29 @@
-export const formatDateRange = (startDate, endDate, format) => {
-  if (startDate > endDate) throw new Error("Invalid date range");
+import { format, isBefore } from "date-fns";
 
-  const pad = n => n < 10 ? "0" + n : n;
-
-  const formats = {
-    "DD/MM/YY": () => {
-      return (
-        pad(startDate.getDate()) +
-        "/" +
-        pad(startDate.getMonth() + 1) +
-        "/" +
-        String(startDate.getFullYear()).slice(-2) +
-        " - " +
-        pad(endDate.getDate()) +
-        "/" +
-        pad(endDate.getMonth() + 1) +
-        "/" +
-        String(endDate.getFullYear()).slice(-2)
-      );
-    },
-    "MM/YYYY": () => {
-      return (
-        pad(startDate.getMonth() + 1) +
-        "/" +
-        startDate.getFullYear() +
-        " - " +
-        pad(endDate.getMonth() + 1) +
-        "/" +
-        endDate.getFullYear()
-      );
-    },
-  };
-
-  if (!formats[format]) throw new Error("Invalid format");
-
-  return formats[format]();
+export const FORMATS = {
+  DAY_MONTH_YEAR: "dd-MM-yyyy",
+  DAY_MONTH_YEAR_SLASH: "dd/MM/yyyy",
+  MONTH_YEAR: "MM-yyyy",
+  MONTH_YEAR_SLASH: "MM/yyyy",
+  TIME: "HH:mm:ss",
+  DATE_TIME: "yyyy-MM-ddTHH:mm:ss",
+  DATE_TIME_WITH_MILLISECONDS: "yyyy-MM-ddTHH:mm:ss.SSS",
 };
+
+export function formatDateRange(
+  startDate,
+  endDate,
+  style = FORMATS.DAY_MONTH_YEAR_SLASH
+) {
+  if (!startDate || !endDate || !FORMATS[style]) {
+    throw new Error("Invalid parameters");
+  }
+
+  if (isBefore(endDate, startDate)) {
+    throw new Error("Invalid date range");
+  }
+
+  const start = format(new Date(startDate), FORMATS[style]);
+  const end = format(new Date(endDate), FORMATS[style]);
+  return `${start} - ${end}`;
+}

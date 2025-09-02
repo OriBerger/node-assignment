@@ -2,7 +2,6 @@
   "name": "node-assignment",
   "version": "1.0.0",
   "description": "a small assignment for the course about node",
-  "main": "index.js",
   "type": "module",
   "scripts": {
     "start": "node index.js",

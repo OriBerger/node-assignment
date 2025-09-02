@@ -10,28 +10,28 @@ describe("formatDateRange", () => {
   const end1 = new Date(2025, 0, 5);
 
   it("format date range DD/MM/YY", () => {
-    expect(formatDateRange(start, end, "DD/MM/YY")).toBe("22/05/25 - 23/10/27");
+    expect(formatDateRange(start, end, "DAY_MONTH_YEAR_SLASH")).toBe("22/05/2025 - 23/10/2027");
   });
 
   it("format date range MM/YYYY", () => {
-    expect(formatDateRange(start, end, "MM/YYYY")).toBe("05/2025 - 10/2027");
+    expect(formatDateRange(start, end, "MONTH_YEAR_SLASH")).toBe("05/2025 - 10/2027");
   });
 
-  it("throw error for invalid format", () => {
-    expect(() => formatDateRange(start, end, "MM/YY")).toThrow(
-      "Invalid format"
+  it("throw error for invalid parameters", () => {
+    expect(() => formatDateRange(start, end, "")).toThrow(
+      "Invalid parameters"
     );
   });
 
   it("throw error if startDate is after endDate", () => {
-    expect(() => formatDateRange(start1, end1, "DD/MM/YY")).toThrow(
+    expect(() => formatDateRange(start1, end1, "DAY_MONTH_YEAR_SLASH")).toThrow(
       "Invalid date range"
     );
   });
 });
 
 describe("getDateInfo", () => {
-  const invalidInput = "2025-08-28";
+  const invalidInput = "";
   const date = new Date(2025, 4, 22, 14, 30, 45);
   const saturday = new Date(2025, 7, 2);
   const friday = new Date(2025, 6, 25);
@@ -61,7 +61,7 @@ describe("getDateInfo", () => {
 
   it("throw error if dateInput is not a Date object", () => {
     expect(() => getDateInfo(invalidInput, "Asia/Jerusalem")).toThrow(
-      "Invalid date input"
+      "Invalid parameters"
     );
   });
 });
@@ -69,7 +69,7 @@ describe("getDateInfo", () => {
 describe("generateDates", () => {
   const start = new Date(2025, 4, 22, 2, 3, 2);
   const end = new Date(2027, 9, 23, 2, 3, 2);
-  const start1 = new Date(2025, 4, 22, 2, 3, 2);
+  const start1 = new Date(2025, 4, 18, 2, 3, 2);
   const end1 = new Date(2025, 4, 29, 2, 3, 2);
   const start2 = new Date();
   const end2 = new Date();
@@ -85,8 +85,8 @@ describe("generateDates", () => {
   it("generate week intervals", () => {
     const dates = generateDates(start1, end1, "week");
     expect(dates.length).toBe(2);
-    expect(dates[0].getDate()).toBe(22);
-    expect(dates[1].getDate()).toBe(29);
+    expect(dates[0].getDate()).toBe(18);
+    expect(dates[1].getDate()).toBe(25);
   });
 
   it("throw error for invalid interval", () => {

@@ -1,33 +1,45 @@
 import {
   format,
+  formatISO,
+  getDate,
+  getDay,
   getDayOfYear,
   getDaysInMonth,
+  getHours,
   getISOWeek,
+  getMilliseconds,
+  getMinutes,
+  getMonth,
   getQuarter,
+  getSeconds,
+  getTime,
+  getYear,
 } from "date-fns";
 
-export const getDateInfo = (dateInput, timeZone) => {
-  if (!(dateInput instanceof Date)) {
-    throw new Error("Invalid date input");
+const isWeekend = (dateInput) => (getDay(dateInput) >= 4 ? true : false);
+
+export function getDateInfo(dateInput, timeZone) {
+  if (!dateInput || !timeZone) {
+    throw new Error("Invalid parameters");
   }
-  const isWeekend = dateInput.getDay() >= 4 ? true : false;
+  const date = new Date(dateInput);
   return {
-    year: dateInput.getFullYear(),
-    month: dateInput.getMonth() + 1,
-    monthText: format(dateInput, "MMMM"), // Month name
-    day: dateInput.getDate(),
-    weekDay: format(dateInput, "EEEE"), // Day name
-    hour: dateInput.getHours(),
-    minute: dateInput.getMinutes(),
-    second: dateInput.getSeconds(),
-    millisecond: dateInput.getMilliseconds(),
-    iso: dateInput.toISOString(),
-    weekOfYear: getISOWeek(dateInput),
-    dayOfYear: getDayOfYear(dateInput),
-    quarter: getQuarter(dateInput),
-    isWeekend: isWeekend,
-    daysInMonth: getDaysInMonth(dateInput),
-    timestamp: dateInput.getTime(),
+    year: getYear(date),
+    month: getMonth(date) + 1,
+    monthText: format(date, "MMMM"), // Month name
+    day: getDate(date),
+    weekDay: format(date, "EEEE"), // Day name
+    hour: getHours(date),
+    minute: getMinutes(date),
+    second: getSeconds(date),
+    millisecond: getMilliseconds(date),
+    iso: formatISO(date),
+    weekOfYear: getISOWeek(date),
+    dayOfYear: getDayOfYear(date),
+    quarter: getQuarter(date),
+    isWeekend: isWeekend(date),
+    daysInMonth: getDaysInMonth(date),
+    timestamp: getTime(date),
     timeZone: timeZone,
   };
-};
+}
