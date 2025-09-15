@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
-import { getDateInfo } from "../dates-module/date-and-time.js";
-import { formatDateRange } from "../dates-module/dates.js";
-import { generateDates } from "../dates-module/intervals.js";
+import { getDateInfo } from "./date-and-time.js";
+import { formatDateRange } from "./dates.js";
+import { generateDates, intervals } from "./intervals.js";
 
 describe("formatDateRange", () => {
   const start = new Date(2025, 4, 22);
@@ -93,5 +93,14 @@ describe("generateDates", () => {
     expect(() => generateDates(start2, end2, "millisecond")).toThrow(
       "Invalid interval"
     );
+  });
+
+  it("generate halfday intervals", () => {
+    const dates = generateDates(start1, end1, intervals.halfday);
+    expect(dates.length).toBe(22);
+    expect(dates[0].getHours()).toBe(2);
+    expect(dates[1].getHours()).toBe(14);
+    expect(dates[2].getDate()).toBe(19);
+    expect(dates[2].getHours()).toBe(2);
   });
 });

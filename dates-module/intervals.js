@@ -8,7 +8,18 @@ import {
   isBefore,
 } from "date-fns";
 
-const intervals = {
+export const intervals = {
+  year: "year",
+  month: "month",
+  week: "week",
+  day: "day",
+  halfday: "halfday",
+  hour: "hour",
+  minute: "minute",
+  second: "second",
+};
+
+const intervalsFunctions = {
   year: eachYearOfInterval,
   month: eachMonthOfInterval,
   week: eachWeekOfInterval,
@@ -25,7 +36,7 @@ function createInterval(startDate, endDate, interval) {
   let end = new Date(endDate);
   while (isBefore(current, end)) {
     dates.push(new Date(current));
-    if (interval === "halfday") {
+    if (interval === intervals.halfday) {
       current.setHours(current.getHours() + 12); // Halfday
     } else {
       current.setSeconds(current.getSeconds() + 1); // Second
@@ -38,11 +49,11 @@ export function generateDates(startDate, endDate, interval = "day") {
   if (!intervals[interval]) {
     throw new Error("Invalid interval");
   }
-  if (interval === "halfday" || interval === "second") {
+  if (interval === intervals.halfday || interval === intervals.second) {
     return createInterval(startDate, endDate, interval); // Manual implementation
   }
   const start = new Date(startDate);
   const end = new Date(endDate);
-  const dates = intervals[interval]({ start, end });
+  const dates = intervalsFunctions[interval]({ start, end });
   return dates;
 }

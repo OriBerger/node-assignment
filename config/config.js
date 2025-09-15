@@ -1,17 +1,15 @@
 import dotenv from "dotenv";
 dotenv.config();
 
-export const getConfig = () => {
-  return {
+export const getConfig = () => ({
     name: process.env.NAME,
     env: process.env.ENV,
     port: process.env.PORT,
     username: process.env.APP_USERNAME,
-  };
-};
+});
 
 export const config = () => {
-  setInterval(() => {
+  return setInterval(() => {
     console.log("Config: ", getConfig());
   }, 5000);
 };
