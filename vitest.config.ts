@@ -4,7 +4,7 @@ export default defineConfig({
   test: {
     globals: true,
     environment: "node",
-    include: ["dates-module/**/*.test.js"],
+    include: ["dates-module/**/*.test.ts"],
     coverage: {
       reporter: ["text", "json", "html"],
     },

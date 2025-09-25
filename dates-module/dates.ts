@@ -1,5 +1,7 @@
 import { format, isBefore } from "date-fns";
 
+export type FormatStyle = keyof typeof FORMATS;
+
 export const FORMATS = {
   DAY_MONTH_YEAR: "dd-MM-yyyy",
   DAY_MONTH_YEAR_SLASH: "dd/MM/yyyy",
@@ -11,10 +13,10 @@ export const FORMATS = {
 };
 
 export function formatDateRange(
-  startDate,
-  endDate,
-  style = FORMATS.DAY_MONTH_YEAR_SLASH
-) {
+  startDate: Date | string | number,
+  endDate: Date | string | number,
+  style: FormatStyle
+): string {
   if (!startDate || !endDate || !FORMATS[style]) {
     throw new Error("Invalid parameters");
   }

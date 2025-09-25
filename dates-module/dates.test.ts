@@ -1,24 +1,28 @@
 import { describe, expect, it } from "vitest";
-import { getDateInfo } from "./date-and-time.js";
-import { formatDateRange } from "./dates.js";
-import { generateDates, intervals } from "./intervals.js";
+import { getDateInfo } from "./date-and-time.ts";
+import { formatDateRange } from "./dates.ts";
+import { generateDates, IntervalType } from "./intervals.ts";
 
 describe("formatDateRange", () => {
-  const start = new Date(2025, 4, 22);
-  const end = new Date(2027, 9, 23);
-  const start1 = new Date(2025, 11, 10);
-  const end1 = new Date(2025, 0, 5);
+  const start: Date = new Date(2025, 4, 22);
+  const end: Date = new Date(2027, 9, 23);
+  const start1: Date = new Date(2025, 11, 10);
+  const end1: Date = new Date(2025, 0, 5);
 
   it("format date range DD/MM/YY", () => {
-    expect(formatDateRange(start, end, "DAY_MONTH_YEAR_SLASH")).toBe("22/05/2025 - 23/10/2027");
+    expect(formatDateRange(start, end, "DAY_MONTH_YEAR_SLASH")).toBe(
+      "22/05/2025 - 23/10/2027"
+    );
   });
 
   it("format date range MM/YYYY", () => {
-    expect(formatDateRange(start, end, "MONTH_YEAR_SLASH")).toBe("05/2025 - 10/2027");
+    expect(formatDateRange(start, end, "MONTH_YEAR_SLASH")).toBe(
+      "05/2025 - 10/2027"
+    );
   });
 
   it("throw error for invalid parameters", () => {
-    expect(() => formatDateRange(start, end, "")).toThrow(
+    expect(() => formatDateRange(start, end, "" as any)).toThrow(
       "Invalid parameters"
     );
   });
@@ -31,11 +35,11 @@ describe("formatDateRange", () => {
 });
 
 describe("getDateInfo", () => {
-  const invalidInput = "";
-  const date = new Date(2025, 4, 22, 14, 30, 45);
-  const saturday = new Date(2025, 7, 2);
-  const friday = new Date(2025, 6, 25);
-  const date1 = new Date(2025, 0, 15);
+  const invalidInput: string = "";
+  const date: Date = new Date(2025, 4, 22, 14, 30, 45);
+  const saturday: Date = new Date(2025, 7, 2);
+  const friday: Date = new Date(2025, 6, 25);
+  const date1: Date = new Date(2025, 0, 15);
 
   it("return info for a date and time", () => {
     const info = getDateInfo(date, "Asia/Jerusalem");
@@ -67,15 +71,15 @@ describe("getDateInfo", () => {
 });
 
 describe("generateDates", () => {
-  const start = new Date(2025, 4, 22, 2, 3, 2);
-  const end = new Date(2027, 9, 23, 2, 3, 2);
-  const start1 = new Date(2025, 4, 18, 2, 3, 2);
-  const end1 = new Date(2025, 4, 29, 2, 3, 2);
-  const start2 = new Date();
-  const end2 = new Date();
+  const start: Date = new Date(2025, 4, 22, 2, 3, 2);
+  const end: Date = new Date(2027, 9, 23, 2, 3, 2);
+  const start1: Date = new Date(2025, 4, 18, 2, 3, 2);
+  const end1: Date = new Date(2025, 4, 29, 2, 3, 2);
+  const start2: Date = new Date();
+  const end2: Date = new Date();
 
   it("generate year intervals", () => {
-    const dates = generateDates(start, end, "year");
+    const dates: Date[] = generateDates(start, end, "year");
     expect(dates.length).toBe(3);
     expect(dates[0].getFullYear()).toBe(2025);
     expect(dates[1].getFullYear()).toBe(2026);
@@ -83,20 +87,20 @@ describe("generateDates", () => {
   });
 
   it("generate week intervals", () => {
-    const dates = generateDates(start1, end1, "week");
+    const dates: Date[] = generateDates(start1, end1, "week");
     expect(dates.length).toBe(2);
     expect(dates[0].getDate()).toBe(18);
     expect(dates[1].getDate()).toBe(25);
   });
 
   it("throw error for invalid interval", () => {
-    expect(() => generateDates(start2, end2, "millisecond")).toThrow(
-      "Invalid interval"
-    );
+    expect(() =>
+      generateDates(start2, end2, "millisecond" as IntervalType)
+    ).toThrow("Invalid interval");
   });
 
   it("generate halfday intervals", () => {
-    const dates = generateDates(start1, end1, intervals.halfday);
+    const dates: Date[] = generateDates(start1, end1, "halfday");
     expect(dates.length).toBe(22);
     expect(dates[0].getHours()).toBe(2);
     expect(dates[1].getHours()).toBe(14);

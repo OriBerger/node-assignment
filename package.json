@@ -4,9 +4,9 @@
   "description": "a small assignment for the course about node",
   "type": "module",
   "scripts": {
-    "start": "node index.js",
+    "start": "ts-node index.ts",
     "test": "vitest run",
-    "config": "node ./config/config.js"
+    "config": "ts-node config/config.ts"
   },
   "keywords": [],
   "author": "",
@@ -16,6 +16,9 @@
     "dotenv": "^17.2.1"
   },
   "devDependencies": {
+    "@types/node": "^24.5.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.2",
     "vitest": "^3.2.4"
   }
 }

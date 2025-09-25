@@ -12,17 +12,41 @@ import {
   getMonth,
   getQuarter,
   getSeconds,
-  getTime,
   getYear,
 } from "date-fns";
 
-const isWeekend = (dateInput) => (getDay(dateInput) >= 4 ? true : false);
+const isWeekend = (dateInput: Date): boolean => getDay(dateInput) >= 4;
 
-export function getDateInfo(dateInput, timeZone) {
+export interface DateInfo {
+  year: number;
+  month: number;
+  monthText: string;
+  day: number;
+  weekDay: string;
+  hour: number;
+  minute: number;
+  second: number;
+  millisecond: number;
+  iso: string;
+  weekOfYear: number;
+  dayOfYear: number;
+  quarter: number;
+  isWeekend: boolean;
+  daysInMonth: number;
+  timestamp: number;
+  timeZone: string;
+}
+
+export function getDateInfo(
+  dateInput: string | Date,
+  timeZone: string
+): DateInfo {
   if (!dateInput || !timeZone) {
     throw new Error("Invalid parameters");
   }
-  const date = new Date(dateInput);
+
+  const date = typeof dateInput === "string" ? new Date(dateInput) : dateInput;
+
   return {
     year: getYear(date),
     month: getMonth(date) + 1,
@@ -39,7 +63,7 @@ export function getDateInfo(dateInput, timeZone) {
     quarter: getQuarter(date),
     isWeekend: isWeekend(date),
     daysInMonth: getDaysInMonth(date),
-    timestamp: getTime(date),
-    timeZone: timeZone,
+    timestamp: date.getTime(),
+    timeZone,
   };
 }
