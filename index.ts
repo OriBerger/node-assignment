@@ -2,6 +2,7 @@ import { getDateInfo } from "./dates-module/date-and-time.ts";
 import { formatDateRange } from "./dates-module/dates.ts";
 import type { IntervalType } from "./dates-module/intervals.ts";
 import { generateDates } from "./dates-module/intervals.ts";
+import { scheduler } from "./scheduler/scheduler.ts";
 
 const start = new Date(2025, 4, 22);
 const end = new Date(2027, 9, 23);
@@ -31,3 +32,22 @@ console.log(generateDates(start2, end2, "halfday" as IntervalType));
 console.log(generateDates(start3, end3, "minute" as IntervalType));
 console.log(generateDates(start2, end2, "day" as IntervalType));
 console.log(generateDates(start3, end3, "second" as IntervalType));
+
+
+scheduler(() => {
+  console.log("3 seconds: Format date range DD/MM/YYYY:", formatDateRange(start, end, "DAY_MONTH_YEAR_SLASH"));
+}, { delayInSeconds: 3 });
+
+scheduler(() => {
+  console.log("3 seconds: Format date range MM/YYYY:", formatDateRange(start, end, "MONTH_YEAR_SLASH"));
+}, { delayInSeconds: 3 });
+
+const runAtDate = new Date(Date.now() + 5000); // 5 seconds from now
+scheduler(() => {
+  console.log("5 seconds: getDateInfo now:", getDateInfo(date, "Asia/Jerusalem"));
+}, { date: runAtDate });
+
+const isoDate = new Date(Date.now() + 7000).toISOString();
+scheduler(() => {
+  console.log("7 seconds: getDateInfo with ISO date:", getDateInfo(date1, "Asia/Jerusalem"));
+}, { isoString: isoDate });

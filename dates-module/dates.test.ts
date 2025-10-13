@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { getDateInfo } from "./date-and-time.ts";
 import { formatDateRange } from "./dates.ts";
-import { generateDates, IntervalType } from "./intervals.ts";
+import { generateDates } from "./intervals.ts";
 
 describe("formatDateRange", () => {
   const start = new Date(2025, 4, 22);
@@ -95,7 +95,7 @@ describe("generateDates", () => {
 
   it("throw error for invalid interval", () => {
     expect(() =>
-      generateDates(start2, end2, "millisecond" as IntervalType)
+      generateDates(start2, end2, "millisecond" as any)
     ).toThrow("Invalid interval");
   });
 

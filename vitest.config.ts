@@ -4,7 +4,9 @@ export default defineConfig({
   test: {
     globals: true,
     environment: "node",
-    include: ["dates-module/**/*.test.ts"],
+    include: ["dates-module/**/*.test.ts",
+      "scheduler/**/*.test.ts"
+    ],
     coverage: {
       reporter: ["text", "json", "html"],
     },
