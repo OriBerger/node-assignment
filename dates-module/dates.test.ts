@@ -4,10 +4,10 @@ import { formatDateRange } from "./dates.ts";
 import { generateDates, IntervalType } from "./intervals.ts";
 
 describe("formatDateRange", () => {
-  const start: Date = new Date(2025, 4, 22);
-  const end: Date = new Date(2027, 9, 23);
-  const start1: Date = new Date(2025, 11, 10);
-  const end1: Date = new Date(2025, 0, 5);
+  const start = new Date(2025, 4, 22);
+  const end = new Date(2027, 9, 23);
+  const start1 = new Date(2025, 11, 10);
+  const end1 = new Date(2025, 0, 5);
 
   it("format date range DD/MM/YY", () => {
     expect(formatDateRange(start, end, "DAY_MONTH_YEAR_SLASH")).toBe(
@@ -36,10 +36,10 @@ describe("formatDateRange", () => {
 
 describe("getDateInfo", () => {
   const invalidInput: string = "";
-  const date: Date = new Date(2025, 4, 22, 14, 30, 45);
-  const saturday: Date = new Date(2025, 7, 2);
-  const friday: Date = new Date(2025, 6, 25);
-  const date1: Date = new Date(2025, 0, 15);
+  const date = new Date(2025, 4, 22, 14, 30, 45);
+  const saturday = new Date(2025, 7, 2);
+  const friday = new Date(2025, 6, 25);
+  const date1 = new Date(2025, 0, 15);
 
   it("return info for a date and time", () => {
     const info = getDateInfo(date, "Asia/Jerusalem");
@@ -71,12 +71,12 @@ describe("getDateInfo", () => {
 });
 
 describe("generateDates", () => {
-  const start: Date = new Date(2025, 4, 22, 2, 3, 2);
-  const end: Date = new Date(2027, 9, 23, 2, 3, 2);
-  const start1: Date = new Date(2025, 4, 18, 2, 3, 2);
-  const end1: Date = new Date(2025, 4, 29, 2, 3, 2);
-  const start2: Date = new Date();
-  const end2: Date = new Date();
+  const start = new Date(2025, 4, 22, 2, 3, 2);
+  const end = new Date(2027, 9, 23, 2, 3, 2);
+  const start1 = new Date(2025, 4, 18, 2, 3, 2);
+  const end1 = new Date(2025, 4, 29, 2, 3, 2);
+  const start2 = new Date();
+  const end2 = new Date();
 
   it("generate year intervals", () => {
     const dates: Date[] = generateDates(start, end, "year");

@@ -3,18 +3,18 @@ import { formatDateRange } from "./dates-module/dates.ts";
 import type { IntervalType } from "./dates-module/intervals.ts";
 import { generateDates } from "./dates-module/intervals.ts";
 
-const start: Date = new Date(2025, 4, 22);
-const end: Date = new Date(2027, 9, 23);
-const start1: Date = new Date(2025, 3, 2);
-const end1: Date = new Date(2025, 11, 4);
+const start = new Date(2025, 4, 22);
+const end = new Date(2027, 9, 23);
+const start1 = new Date(2025, 3, 2);
+const end1 = new Date(2025, 11, 4);
 
-const date: Date = new Date();
-const date1: Date = new Date();
+const date = new Date();
+const date1 = new Date();
 
-const start2: Date = new Date(2025, 4, 22, 2, 3, 2);
-const end2: Date = new Date(2026, 9, 23, 2, 3, 2);
-const start3: Date = new Date(2025, 4, 2, 2, 3, 2);
-const end3: Date = new Date(2025, 4, 2, 2, 6, 6);
+const start2 = new Date(2025, 4, 22, 2, 3, 2);
+const end2 = new Date(2026, 9, 23, 2, 3, 2);
+const start3 = new Date(2025, 4, 2, 2, 3, 2);
+const end3 = new Date(2025, 4, 2, 2, 6, 6);
 
 console.log(formatDateRange(start, end, "DAY_MONTH_YEAR_SLASH"));
 console.log(formatDateRange(start, end, "MONTH_YEAR_SLASH"));
