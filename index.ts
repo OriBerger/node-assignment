@@ -1,6 +1,5 @@
 import { getDateInfo } from "./dates-module/date-and-time.ts";
 import { formatDateRange } from "./dates-module/dates.ts";
-import type { IntervalType } from "./dates-module/intervals.ts";
 import { generateDates } from "./dates-module/intervals.ts";
 import { scheduler } from "./scheduler/scheduler.ts";
 
@@ -25,13 +24,13 @@ console.log(formatDateRange(start1, end1, "MONTH_YEAR_SLASH"));
 console.log(getDateInfo(date, "Asia/Jerusalem"));
 console.log(getDateInfo(date1, "Asia/Jerusalem"));
 
-console.log(generateDates(start2, end2, "year" as IntervalType));
-console.log(generateDates(start2, end2, "week" as IntervalType));
-console.log(generateDates(start2, end2, "month" as IntervalType));
-console.log(generateDates(start2, end2, "halfday" as IntervalType));
-console.log(generateDates(start3, end3, "minute" as IntervalType));
-console.log(generateDates(start2, end2, "day" as IntervalType));
-console.log(generateDates(start3, end3, "second" as IntervalType));
+console.log(generateDates(start2, end2, "year"));
+console.log(generateDates(start2, end2, "week"));
+console.log(generateDates(start2, end2, "month"));
+console.log(generateDates(start2, end2, "halfday"));
+console.log(generateDates(start3, end3, "minute"));
+console.log(generateDates(start2, end2, "day"));
+console.log(generateDates(start3, end3, "second"));
 
 
 scheduler(() => {
