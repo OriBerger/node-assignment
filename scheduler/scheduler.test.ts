@@ -8,9 +8,12 @@ describe("scheduler", () => {
 
   it("runs callback after delay (seconds)", async () => {
     let done = false;
-    scheduler(() => {
-      done = true;
-    }, { delayInSeconds: 2 });
+    scheduler(
+      () => {
+        done = true;
+      },
+      { delayInSeconds: 2 }
+    );
 
     await wait(2500);
     expect(done).toBe(true);
@@ -19,9 +22,12 @@ describe("scheduler", () => {
   it("runs callback at specific Date", async () => {
     let done = false;
     const targetDate = new Date(Date.now() + 2000);
-    scheduler(() => {
-      done = true;
-    }, { date: targetDate });
+    scheduler(
+      () => {
+        done = true;
+      },
+      { date: targetDate }
+    );
 
     await wait(2500);
     expect(done).toBe(true);
@@ -31,9 +37,12 @@ describe("scheduler", () => {
     let done = false;
     const isoDate = formatISO(new Date(Date.now() + 2000));
 
-    scheduler(() => {
-      done = true;
-    }, { isoString: isoDate });
+    scheduler(
+      () => {
+        done = true;
+      },
+      { isoString: isoDate }
+    );
 
     await wait(2500);
     expect(done).toBe(true);
@@ -41,9 +50,12 @@ describe("scheduler", () => {
 
   it("runs callback using CRON syntax", async () => {
     let count = 0;
-    const job = scheduler(() => {
-      count++;
-    }, { cron: "*/1 * * * * *" }); // every second
+    const job = scheduler(
+      () => {
+        count++;
+      },
+      { cron: "*/1 * * * * *" }
+    ); // every second
 
     await wait(3100);
     job.cancel();
@@ -58,9 +70,12 @@ describe("scheduler", () => {
     const dates = generateDates(start, end, "second");
     expect(dates.length).toBeGreaterThan(1);
 
-    scheduler(() => {
-      done = true;
-    }, { date: dates[1] }); // schedule at second timestamp
+    scheduler(
+      () => {
+        done = true;
+      },
+      { date: dates[1] }
+    ); // schedule at second timestamp
 
     await wait(2500);
     expect(done).toBe(true);

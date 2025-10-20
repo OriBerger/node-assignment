@@ -20,7 +20,8 @@ export function scheduler(callback: Callback, options: ScheduleOptions): Job {
         console.error("Error in scheduled cron callback:", err);
       }
     });
-  } else { // Date / ISO / delay
+  } else {
+    // Date / ISO / delay
     let dateToRun: Date;
 
     if (options.delayInSeconds !== undefined) {
@@ -42,5 +43,5 @@ export function scheduler(callback: Callback, options: ScheduleOptions): Job {
     });
   }
 
-  return job; 
+  return job;
 }

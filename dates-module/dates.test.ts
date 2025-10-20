@@ -94,9 +94,9 @@ describe("generateDates", () => {
   });
 
   it("throw error for invalid interval", () => {
-    expect(() =>
-      generateDates(start2, end2, "millisecond" as any)
-    ).toThrow("Invalid interval");
+    expect(() => generateDates(start2, end2, "millisecond" as any)).toThrow(
+      "Invalid interval"
+    );
   });
 
   it("generate halfday intervals", () => {
