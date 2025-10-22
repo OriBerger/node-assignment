@@ -1,7 +1,9 @@
 import { describe, expect, it } from "vitest";
 import { getDateInfo } from "./date-and-time.ts";
-import { formatDateRange } from "./dates.ts";
-import { generateDates } from "./intervals.ts";
+import { formatDateRange, FORMATS } from "./dates.ts";
+import { generateDates, INTERVALS } from "./intervals.ts";
+
+const timezone = "Asia/Jerusalem";
 
 describe("formatDateRange", () => {
   const start = new Date(2025, 4, 22);
@@ -10,13 +12,13 @@ describe("formatDateRange", () => {
   const end1 = new Date(2025, 0, 5);
 
   it("format date range DD/MM/YY", () => {
-    expect(formatDateRange(start, end, "DAY_MONTH_YEAR_SLASH")).toBe(
+    expect(formatDateRange(start, end, FORMATS.DAY_MONTH_YEAR_SLASH)).toBe(
       "22/05/2025 - 23/10/2027"
     );
   });
 
   it("format date range MM/YYYY", () => {
-    expect(formatDateRange(start, end, "MONTH_YEAR_SLASH")).toBe(
+    expect(formatDateRange(start, end, FORMATS.MONTH_YEAR_SLASH)).toBe(
       "05/2025 - 10/2027"
     );
   });
@@ -28,7 +30,7 @@ describe("formatDateRange", () => {
   });
 
   it("throw error if startDate is after endDate", () => {
-    expect(() => formatDateRange(start1, end1, "DAY_MONTH_YEAR_SLASH")).toThrow(
+    expect(() => formatDateRange(start1, end1, FORMATS.DAY_MONTH_YEAR_SLASH)).toThrow(
       "Invalid date range"
     );
   });
@@ -42,21 +44,21 @@ describe("getDateInfo", () => {
   const date1 = new Date(2025, 0, 15);
 
   it("return info for a date and time", () => {
-    const info = getDateInfo(date, "Asia/Jerusalem");
+    const info = getDateInfo(date, timezone);
     expect(info.month).toBe(5);
     expect(info.hour).toBe(14);
     expect(info.second).toBe(45);
     expect(typeof info.weekDay).toBe("string");
-    expect(info.timeZone).toBe("Asia/Jerusalem");
+    expect(info.timeZone).toBe(timezone);
   });
 
   it("detect weekend correctly", () => {
-    expect(getDateInfo(saturday, "Asia/Jerusalem").isWeekend).toBe(true);
-    expect(getDateInfo(friday, "Asia/Jerusalem").isWeekend).toBe(true);
+    expect(getDateInfo(saturday, timezone).isWeekend).toBe(true);
+    expect(getDateInfo(friday, timezone).isWeekend).toBe(true);
   });
 
   it("calculate weekOfYear, dayOfYear, quarter, and daysInMonth correctly", () => {
-    const info = getDateInfo(date1, "Asia/Jerusalem");
+    const info = getDateInfo(date1, timezone);
     expect(info.weekOfYear).toBe(3);
     expect(info.dayOfYear).toBe(15);
     expect(info.quarter).toBe(1);
@@ -64,7 +66,7 @@ describe("getDateInfo", () => {
   });
 
   it("throw error if dateInput is not a Date object", () => {
-    expect(() => getDateInfo(invalidInput, "Asia/Jerusalem")).toThrow(
+    expect(() => getDateInfo(invalidInput, timezone)).toThrow(
       "Invalid parameters"
     );
   });
@@ -79,7 +81,7 @@ describe("generateDates", () => {
   const end2 = new Date();
 
   it("generate year intervals", () => {
-    const dates: Date[] = generateDates(start, end, "year");
+    const dates: Date[] = generateDates(start, end, INTERVALS.year);
     expect(dates.length).toBe(3);
     expect(dates[0].getFullYear()).toBe(2025);
     expect(dates[1].getFullYear()).toBe(2026);
@@ -87,7 +89,7 @@ describe("generateDates", () => {
   });
 
   it("generate week intervals", () => {
-    const dates: Date[] = generateDates(start1, end1, "week");
+    const dates: Date[] = generateDates(start1, end1, INTERVALS.week);
     expect(dates.length).toBe(2);
     expect(dates[0].getDate()).toBe(18);
     expect(dates[1].getDate()).toBe(25);
@@ -100,7 +102,7 @@ describe("generateDates", () => {
   });
 
   it("generate halfday intervals", () => {
-    const dates: Date[] = generateDates(start1, end1, "halfday");
+    const dates: Date[] = generateDates(start1, end1, INTERVALS.halfday);
     expect(dates.length).toBe(22);
     expect(dates[0].getHours()).toBe(2);
     expect(dates[1].getHours()).toBe(14);

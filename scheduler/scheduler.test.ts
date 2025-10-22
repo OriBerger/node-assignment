@@ -1,6 +1,6 @@
 import { formatISO } from "date-fns";
 import { describe, expect, it } from "vitest";
-import { generateDates } from "../dates-module/intervals";
+import { generateDates, INTERVALS } from "../dates-module/intervals";
 import { scheduler } from "./scheduler";
 
 describe("scheduler", () => {
@@ -67,7 +67,7 @@ describe("scheduler", () => {
     const start = new Date();
     const end = new Date(start.getTime() + 6000);
 
-    const dates = generateDates(start, end, "second");
+    const dates = generateDates(start, end, INTERVALS.second);
     expect(dates.length).toBeGreaterThan(1);
 
     scheduler(

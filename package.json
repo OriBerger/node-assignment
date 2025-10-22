@@ -4,9 +4,9 @@
   "description": "a small assignment for the course about node",
   "type": "module",
   "scripts": {
-    "start": "ts-node index.ts",
+    "start": "tsx index.ts",
     "test": "vitest run",
-    "config": "ts-node config/config.ts"
+    "config": "tsx config/config.ts"
   },
   "keywords": [],
   "author": "",
@@ -20,6 +20,7 @@
     "@types/node": "^24.5.2",
     "@types/node-schedule": "^2.1.8",
     "ts-node": "^10.9.2",
+    "tsx": "^4.20.6",
     "typescript": "^5.9.2",
     "vitest": "^3.2.4"
   }

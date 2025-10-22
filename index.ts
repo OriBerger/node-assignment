@@ -1,8 +1,10 @@
 import { getDateInfo } from "./dates-module/date-and-time.ts";
-import { formatDateRange } from "./dates-module/dates.ts";
-import { generateDates } from "./dates-module/intervals.ts";
+import { formatDateRange, FORMATS } from "./dates-module/dates.ts";
+import { generateDates, INTERVALS } from "./dates-module/intervals.ts";
 import { Queue } from "./generic-queue/generic-queue.ts";
 import { scheduler } from "./scheduler/scheduler.ts";
+
+const timezone = "Asia/Jerusalem";
 
 const start = new Date(2025, 4, 22);
 const end = new Date(2027, 9, 23);
@@ -17,27 +19,27 @@ const end2 = new Date(2026, 9, 23, 2, 3, 2);
 const start3 = new Date(2025, 4, 2, 2, 3, 2);
 const end3 = new Date(2025, 4, 2, 2, 6, 6);
 
-console.log(formatDateRange(start, end, "DAY_MONTH_YEAR_SLASH"));
-console.log(formatDateRange(start, end, "MONTH_YEAR_SLASH"));
-console.log(formatDateRange(start1, end1, "DAY_MONTH_YEAR_SLASH"));
-console.log(formatDateRange(start1, end1, "MONTH_YEAR_SLASH"));
+console.log(formatDateRange(start, end, FORMATS.DAY_MONTH_YEAR_SLASH));
+console.log(formatDateRange(start, end, FORMATS.MONTH_YEAR_SLASH));
+console.log(formatDateRange(start1, end1, FORMATS.DAY_MONTH_YEAR_SLASH));
+console.log(formatDateRange(start1, end1, FORMATS.MONTH_YEAR_SLASH));
 
-console.log(getDateInfo(date, "Asia/Jerusalem"));
-console.log(getDateInfo(date1, "Asia/Jerusalem"));
+console.log(getDateInfo(date, timezone));
+console.log(getDateInfo(date1, timezone));
 
-console.log(generateDates(start2, end2, "year"));
-console.log(generateDates(start2, end2, "week"));
-console.log(generateDates(start2, end2, "month"));
-console.log(generateDates(start2, end2, "halfday"));
-console.log(generateDates(start3, end3, "minute"));
-console.log(generateDates(start2, end2, "day"));
-console.log(generateDates(start3, end3, "second"));
+console.log(generateDates(start2, end2, INTERVALS.year));
+console.log(generateDates(start2, end2, INTERVALS.week));
+console.log(generateDates(start2, end2, INTERVALS.month));
+console.log(generateDates(start2, end2, INTERVALS.halfday));
+console.log(generateDates(start3, end3, INTERVALS.minute));
+console.log(generateDates(start2, end2, INTERVALS.day));
+console.log(generateDates(start3, end3, INTERVALS.second));
 
 scheduler(
   () => {
     console.log(
       "3 seconds: Format date range DD/MM/YYYY:",
-      formatDateRange(start, end, "DAY_MONTH_YEAR_SLASH")
+      formatDateRange(start, end, FORMATS.DAY_MONTH_YEAR_SLASH)
     );
   },
   { delayInSeconds: 3 }
@@ -47,7 +49,7 @@ scheduler(
   () => {
     console.log(
       "3 seconds: Format date range MM/YYYY:",
-      formatDateRange(start, end, "MONTH_YEAR_SLASH")
+      formatDateRange(start, end, FORMATS.MONTH_YEAR_SLASH)
     );
   },
   { delayInSeconds: 3 }
@@ -58,7 +60,7 @@ scheduler(
   () => {
     console.log(
       "5 seconds: getDateInfo now:",
-      getDateInfo(date, "Asia/Jerusalem")
+      getDateInfo(date, timezone)
     );
   },
   { date: runAtDate }
@@ -69,7 +71,7 @@ scheduler(
   () => {
     console.log(
       "7 seconds: getDateInfo with ISO date:",
-      getDateInfo(date1, "Asia/Jerusalem")
+      getDateInfo(date1, timezone)
     );
   },
   { isoString: isoDate }

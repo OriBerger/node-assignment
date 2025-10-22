@@ -1,3 +1,4 @@
+import { addSeconds, isBefore, parseISO } from "date-fns";
 import schedule, { Job } from "node-schedule";
 
 type Callback = () => void | Promise<void>;
@@ -10,10 +11,11 @@ interface ScheduleOptions {
 }
 
 export function scheduler(callback: Callback, options: ScheduleOptions): Job {
+  const { delayInSeconds = 0, date, isoString, cron } = options;
   let job: Job;
 
-  if (options.cron) {
-    job = schedule.scheduleJob(options.cron, async () => {
+  if (cron) {
+    job = schedule.scheduleJob(cron, async () => {
       try {
         await callback();
       } catch (err) {
@@ -22,18 +24,15 @@ export function scheduler(callback: Callback, options: ScheduleOptions): Job {
     });
   } else {
     // Date / ISO / delay
-    let dateToRun: Date;
+    let dateToRun: Date = new Date();
+    if (delayInSeconds > 0) dateToRun = addSeconds(dateToRun, delayInSeconds);
+    if (date) dateToRun = date;
+    if (isoString) dateToRun = parseISO(isoString);
 
-    if (options.delayInSeconds !== undefined) {
-      dateToRun = new Date(Date.now() + options.delayInSeconds * 1000);
-    } else if (options.date) {
-      dateToRun = options.date;
-    } else if (options.isoString) {
-      dateToRun = new Date(options.isoString);
-    } else {
-      throw new Error("No valid time option provided");
+    if (isBefore(dateToRun, new Date())) {
+      throw new Error("Scheduled date is in the past");
     }
-
+    
     job = schedule.scheduleJob(dateToRun, async () => {
       try {
         await callback();
